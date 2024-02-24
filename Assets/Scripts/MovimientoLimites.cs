@@ -9,18 +9,24 @@ public class MovimientoLimites : MonoBehaviour
     public float speed = 5;
     private Rigidbody enemyRB;
     private GameObject player;
+    private bool isGameActiveTest;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         enemyRB = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
+        isGameActiveTest = SceneManagerMenu.isGameActive;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movimiento();
+        if(isGameActiveTest == true)
+        {
+            Movimiento();
+        }
         DestruccionDeCopias();
     }
 
@@ -42,10 +48,14 @@ public class MovimientoLimites : MonoBehaviour
         {
             enemyRB.AddForce(Vector3.forward * speed);
         }
-        if (CompareTag("Enemigo Seguidor"))
+        if (CompareTag("Enemigo Seguidor") && SceneManagerMenu.isGameActive == true)
         {
             Vector3 mirarDireccion = (player.transform.position - transform.position).normalized;
             enemyRB.AddForce(mirarDireccion *  speed);
+        }
+        if (CompareTag("Powerup") && SceneManagerMenu.isGameActive == true)
+        {
+            enemyRB.AddTorque(Vector3.up);
         }
     }
 
@@ -71,6 +81,14 @@ public class MovimientoLimites : MonoBehaviour
         }
         //limite izquiera
         if (transform.position.x < -xDestroy)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<PlayerController>() && PlayerController.hasPowerup == true)
         {
             Destroy(gameObject);
         }

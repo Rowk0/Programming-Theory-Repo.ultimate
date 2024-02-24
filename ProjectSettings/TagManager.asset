@@ -10,6 +10,7 @@ TagManager:
   - Enemigo Top Izquierda
   - Enemigo Seguidor
   - Powerup
+  - MyGame
   layers:
   - Default
   - TransparentFX

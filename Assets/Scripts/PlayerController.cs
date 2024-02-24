@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float velocidad;
+    private float m_velocidad = 10;
+    public float velocidad 
+    {  
+        get { return m_velocidad; }
+        set { m_velocidad = value;}
+    }
     private Rigidbody jugadorRB;
     private float zLimite = 25;
     private float xLimite = 56;
+    public static bool hasPowerup = false;
+    public GameObject powerupIndicator;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         jugadorRB = GetComponent<Rigidbody>();
+        
     }
 
     // Update is called once per frame
@@ -30,6 +39,8 @@ public class PlayerController : MonoBehaviour
 
         jugadorRB.AddForce(Vector3.forward * velocidad * verticalInput);
         jugadorRB.AddForce(Vector3.right * velocidad * horizontalInput);
+
+        powerupIndicator.transform.Rotate(Vector3.up);
     }
 
     void LimitesMapa()
@@ -58,30 +69,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemigo Top Derecha"))
+        if(collision.gameObject.GetComponent<MovimientoLimites>() && hasPowerup == false)
         {
             Destroy(gameObject);
             Debug.Log("Perdiste maceta");
-        }
-        if (collision.gameObject.CompareTag("Enemigo Top Izquierda"))
-        {
-            Destroy(gameObject);
-            Debug.Log("Perdiste maceta");
-        }
-        if (collision.gameObject.CompareTag("Enemigo Top Arriba"))
-        {
-            Destroy(gameObject);
-            Debug.Log("Perdiste maceta");
-        }
-        if (collision.gameObject.CompareTag("Enemigo Top Abajo"))
-        {
-            Destroy(gameObject);
-            Debug.Log("Perdiste maceta");
-        }
-        if (collision.gameObject.CompareTag("Enemigo Seguidor"))
-        {
-            Destroy(gameObject);
-            Debug.Log("Perdiste maceta");
+            SceneManagerMenu.GameOver();
         }
     }
 
@@ -89,7 +81,18 @@ public class PlayerController : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Powerup"))
         {
+            StopAllCoroutines();
             Destroy(other.gameObject);
+            hasPowerup = true;
+            powerupIndicator.SetActive(true);
+            StartCoroutine(Powerup());
         }
+    }
+
+    IEnumerator Powerup()
+    {
+        yield return new WaitForSeconds(5);
+        hasPowerup = false;
+        powerupIndicator.SetActive(false);
     }
 }
