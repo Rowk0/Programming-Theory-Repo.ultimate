@@ -11,6 +11,7 @@ TagManager:
   - Enemigo Seguidor
   - Powerup
   - MyGame
+  - Environment
   layers:
   - Default
   - TransparentFX

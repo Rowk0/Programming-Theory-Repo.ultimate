@@ -36,7 +36,7 @@ public class SpawnManager : MonoBehaviour
 
             Vector3 spawnPos = new Vector3(randomXTopArriba, 0.6f, zTopArriba);
 
-            Instantiate(enemies[2], spawnPos, enemies[2].gameObject.transform.rotation);
+            Instantiate(enemies[2], spawnPos, enemies[2].transform.rotation);
         }
 
     }
@@ -51,7 +51,7 @@ public class SpawnManager : MonoBehaviour
 
             Vector3 spawnPos = new Vector3(randomXTopAbajo, 0.6f, zTopAbajo);
 
-            Instantiate(enemies[1], spawnPos, enemies[1].gameObject.transform.rotation);
+            Instantiate(enemies[1], spawnPos, enemies[1].transform.rotation);
         }
 
     }
@@ -67,7 +67,7 @@ public class SpawnManager : MonoBehaviour
 
             Vector3 spawnPos = new Vector3(xTopDerecha, 0.6f, randomZTopDerecha);
 
-            Instantiate(enemies[3], spawnPos, enemies[3].gameObject.transform.rotation);
+            Instantiate(enemies[3], spawnPos, enemies[3].transform.rotation);
         }
 
     }
@@ -82,7 +82,7 @@ public class SpawnManager : MonoBehaviour
 
             Vector3 spawnPos = new Vector3(xTopIzquierda, 0.6f, randomZTopIzquierda);
 
-            Instantiate(enemies[4], spawnPos, enemies[4].gameObject.transform.rotation);
+            Instantiate(enemies[4], spawnPos, enemies[4].transform.rotation);
         }
 
     }
@@ -96,9 +96,9 @@ public class SpawnManager : MonoBehaviour
             float randomZSpawn = Random.Range(zSpawn, -zSpawn);
             float randomXSpawn = Random.Range(xSpawn, -xSpawn);
 
-            Vector3 spawnPos = new Vector3(randomXSpawn, 0.6f, randomZSpawn);
+            Vector3 spawnPos = new(randomXSpawn, 0.6f, randomZSpawn);
 
-            Instantiate(enemies[0], spawnPos, enemies[0].gameObject.transform.rotation);
+            Instantiate(enemies[0], spawnPos, enemies[0].transform.rotation);
         }
 
     }
@@ -114,7 +114,7 @@ public class SpawnManager : MonoBehaviour
 
             Vector3 spawnPos = new Vector3(randomXSpawn, 0.6f, randomZSpawn);
 
-            Instantiate(powerup, spawnPos, powerup.gameObject.transform.rotation);
+            Instantiate(powerup, spawnPos, powerup.transform.rotation);
         }
 
     }

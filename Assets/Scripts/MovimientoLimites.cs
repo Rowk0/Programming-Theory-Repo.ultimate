@@ -10,6 +10,9 @@ public class MovimientoLimites : MonoBehaviour
     private Rigidbody enemyRB;
     private GameObject player;
     private bool isGameActiveTest;
+    [SerializeField] GameObject objectThatLooks;
+    [SerializeField] GameObject objectToLook;
+    [SerializeField] float yPos;
     
 
     // Start is called before the first frame update
@@ -18,6 +21,7 @@ public class MovimientoLimites : MonoBehaviour
         enemyRB = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
         isGameActiveTest = SceneManagerMenu.isGameActive;
+        objectToLook = player;
     }
 
     // Update is called once per frame
@@ -52,6 +56,8 @@ public class MovimientoLimites : MonoBehaviour
         {
             Vector3 mirarDireccion = (player.transform.position - transform.position).normalized;
             enemyRB.AddForce(mirarDireccion *  speed);
+
+            MirarJugador();
         }
         if (CompareTag("Powerup") && SceneManagerMenu.isGameActive == true)
         {
@@ -93,4 +99,15 @@ public class MovimientoLimites : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    
+    void MirarJugador()
+    {
+        Vector3 objectToLookPosition;
+
+        objectToLookPosition = objectToLook.transform.position;
+        objectToLookPosition.y = yPos;
+        Quaternion.LookRotation(objectToLookPosition, Vector3.up);
+    }
+    
 }
